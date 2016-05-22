@@ -3,10 +3,12 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import './main.html';
 
-// Template.hello.onCreated(function helloOnCreated() {
-//   // counter starts at 0
-//   this.counter = new ReactiveVar(0);
-// });
+var author = "";
+
+ Template.header.onCreated(function onSSAlaAuMECreated() {
+   // Should be the logged in user
+  	 author = "Anonymous";
+ });
 
 // Template.hello.helpers({
 //   counter() {
@@ -29,7 +31,10 @@ var main = function() {
 		var comment = $input.val();
 
 		if (comment != ""){
-			var html = $('<li>').text(comment);
+			var timestamp = new Date($.now()).toLocaleString();
+			var tags = $('#tags').val();
+			var html = $("<span class= \"badge\">"+ author + " - " + timestamp + "</span>"+ "<li>" + comment + "</li>"
+				+ "<span class=\"label label-primary\">"+ tags +"</span> <p> </p>");
 			html.prependTo('#comments');
 			$input.val("");//clear after insertion
 		}
