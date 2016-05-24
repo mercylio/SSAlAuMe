@@ -35,7 +35,7 @@ form input:focus { /* will only apply to the form when it's focused*/
 	outline: none;
 }
 
-button.btn {
+#buttonpost {
 	background: transparent;
 	border: 2px solid #000;
 
@@ -49,10 +49,20 @@ button.btn {
 	transition: background 2s, border-left 2s;
 }
 
-button.btn:hover {
+#buttonpost:hover {
 	background: #00f28f;
 	color: #fff;
 }
+
+#btnnotloggedin {
+	background: transparent;
+	border: 2px solid #000;
+	color: #ff0000;
+	font-size: 36px;
+	padding: 20px 24px;
+	transition: background 2s, border-left 2s;
+}
+
 
 .comments {
 	margin-top: 40px;

@@ -8,44 +8,80 @@
 </head>
 <body>
 
-<!--<template name="navbar">-->
-  <nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
-    <h1>SSAlAuMe</h1> {{> loginButtons}}
-  </div>
-</nav>
-<!--
-</template>-->
-
-<br><br>
-
-<div class="main">
-  <div class="container">
-    <div class="row">
-      <form class="form">
-        <div class="col-xs-8 col-md-10">
-          <input id="comment" type="text" placeholder="share your thoughts">
-          <input id="tags" type="text" value="html,input,tag" data-role="tagsinput">
-        </div>
-        <div class="col-xs-4 col-md-2">
-          <button type="submit" class="btn">post</button>     
-        </div>      
-      </form>
-
-      <ul class="comments" id="comments">
-        <label>Anoymous</label>
-        <li>Have you felt it?</li>
-        <label>Anonymous</label>
-        <li>There has been an awakening!</li>
-      </ul>
-
-    </div>
-  </div>
-</div>
-
-
 <!-- Clean up some things / remove unnecessary stuff-->
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 <script src="http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
 <script type="text/javascript" src="main.js"></script>
 </body>
+
+<!--TEMPLATES-->
+<template name="ApplicationLayout">
+  {{> yield "navbar"}}
+  {{> yield "messages"}}
+</template>
+
+<template name="navbar">
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <h1>SSAlAuMe</h1> {{> loginButtons}}
+    </div>
+  </nav>
+</template>
+
+<template name="messages">
+<!-- MAX 10-20 messages per page? -->
+  <div class="main">
+    <div class="container">
+      <div class="row">
+        {{> yield "input-messages"}}
+
+        <ul class="comments" id="comments">
+          <label>Anoymous</label>
+          <li>Have you felt it?</li>
+          <label>Anonymous</label>
+          <li>There has been an awakening!</li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="input-messages">
+  <form class="form">
+          <div class="col-xs-8 col-md-10">
+            <input id="comment" type="text" placeholder="share your thoughts">
+            <input id="tags" type="text" value="html,input,tag" data-role="tagsinput">
+          </div>
+          <div class="col-xs-4 col-md-2">
+            <button type="submit" id="buttonpost">post</button>     
+          </div>      
+        </form>
+</template>
+
+<template name="not-allowed-to-post">
+  <form class="form">
+          <div class="col-xs-8 col-md-10">
+            <input id="not-allowed" type="text" placeholder="Sign up / sign in to share your thoughts" disabled>
+          </div>
+          <div class="col-xs-4 col-md-2">
+            <button class="btn btn-warning" id="btnnotloggedin" data-dismiss="modal" disabled>post</button>     
+          </div>     
+        </form>
+</template>
+
+<template name="messages-nav">
+  <!-- put the navigation here
+
+first case: homepage
+  1(highlighted) | 2 | 3 | 4 | OLDER
+
+second case: other pages but not the last
+  NEWER(highlighted) | CURRENT | next 1,2,3 available pages | OLDER
+
+third case: last page
+
+  NEWER | previous 1,2,3 available pages | LAST(highlighted)
+  -->
+</template>
+

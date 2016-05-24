@@ -47,3 +47,22 @@ for(i=0;i<Messages.find().count();i++){
 	console.log("At time: "+Messages.find().fetch()[i].time);
 	console.log("With tags: "+Messages.find().fetch()[i].tags);
 }
+
+//security for messages - must be logged in before posting
+/*
+Messages.allow({
+	insert:function(userId, doc){
+		if (Meteor.user()){ //if user logged in
+			if (userId != doc.createdBy){
+				return false;
+			}
+			else{ //the user has the correct Id
+				return true;
+			}
+		}
+		else { //if user is not logged in
+			return false;
+		}
+	}
+})
+*/

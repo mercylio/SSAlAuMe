@@ -3,6 +3,25 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import './main.html';
 
+/// ROUTING
+/// guide - http://iron-meteor.github.io/iron-router/
+Router.configure({
+	layoutTemplate: 'ApplicationLayout'//the default template we're going to use, is called ApplicationLayout, which will be a super template, into which we can insert other templates. So we will have one global layout, and we can swap out the components
+});
+
+Router.route('/', function () {
+	if(Meteor.user()){
+		this.render('navbar', {to: "navbar"});
+		this.render('messages', {to: "messages"});
+		this.render('input-messages', {to: "input-messages"});
+	}
+	else {
+		this.render('navbar', {to: "navbar"});
+		this.render('messages', {to: "messages"});
+		this.render('not-allowed-to-post', {to: "input-messages"});
+	}
+});
+
 
 /*
  Template.header.onCreated(function onSSAlaAuMECreated() {
@@ -15,6 +34,12 @@ import './main.html';
 Accounts.ui.config({
     passwordSignupFields: "USERNAME_AND_EMAIL"
 });
+
+
+
+///// USE a Template helper to load the messages
+
+//Message insertion
 
 
 
