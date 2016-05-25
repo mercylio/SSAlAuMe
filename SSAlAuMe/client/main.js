@@ -49,8 +49,8 @@ Template.inputMessages.events({
 		if(Meteor.user()){
 			var time = new Date();
 			var author = Meteor.user().username;
-			var text = $(comment).val();
-			var tags = $(tags).val();
+			var text = $("#commentbox").val();
+			var tags = $("#tagsbox").val();
 
 			if ((text != "") && (tags != "")){
 				
@@ -65,9 +65,9 @@ Template.inputMessages.events({
 				*/
 
 				//some jQuery to append the message into the current view (if it is not >10-20 msgs)
-				var html = $("<span class=\"badge\">"+author+" - "+time+"</span>"+"<li>"+text+"</li>"+"<span class=\"label label-primary\"> TAGS: "+tags+"</span>");
+				var html = $("<span class=\"badge\">"+author+" - "+time+"</span>"+"<span class=\"label label-primary\"> TAGS: "+tags+"</span>"+"<li>"+text+"</li>");
 				html.prependTo('#comments');
-				$(comment).val("");
+				$("#commentbox").val("");
 			}
 
 		return false; // we avoid the default operation of the event handler (here is a "reload the page" when we press 'save' in the form)	

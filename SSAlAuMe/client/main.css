@@ -60,6 +60,16 @@ form input:focus { /* will only apply to the form when it's focused*/
 	transition: background 2s, border-left 2s;
 }
 
+#tagsbox {
+	background: #66CCFF;
+	border: none;
+	border-left: 2px solid #fff;
+	font-size: 18px;
+	padding: 10px;
+	width: 100%;
+
+	transition: background 2s, border-left 2s;
+}
 
 .comments {
 	margin-top: 40px;

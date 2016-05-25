@@ -51,8 +51,8 @@
 <template name="inputMessages">
   <form class="form">
           <div class="col-xs-8 col-md-10">
-            <input id="comment" type="text" placeholder="share your thoughts">
-            <input id="tags" type="text" data-role="tagsinput" placeholder="input your tags">
+            <input id="commentbox" type="text" placeholder="share your thoughts">
+            <input id="tagsbox" type="text" placeholder="input your tags">
             <!--<input id="tags" type="text" value="html,input,tag" data-role="tagsinput"> -->
           </div>
           <div class="col-xs-4 col-md-2">
@@ -77,11 +77,11 @@
   <ul class="comments" id="comments">
   
     <!-- for each element of the "Collection.find()" object -->
-    {{#each messages}}    
-    <span class="badge"> {{author}} - {{time}} </span>
-    <li id="msg-text"> {{text}} </li>
+    {{#each messages}}  
+    <span class="badge"> {{author}} - {{time}} </span><!-- PLEASE SEPARTE in 2 independent parts-->
     <span class="label label-primary">TAGS: {{tags}}</span>
-
+    <li id="msg-text"> {{text}} </li>
+    
     
     <!--
     <li id="msg-text"> {{text}} </li>
