@@ -14,7 +14,7 @@ Router.route('/', function () {
 		this.render('navbar', {to: "navbar"});
 		this.render('msgContainer', {to: "msgContainer"});
 		this.render('messages', {to: "messages"});
-		this.render('input-messages', {to: "inputMessages"});
+		this.render('inputMessages', {to: "inputMessages"});
 	}
 	else {//if anonymous
 		this.render('navbar', {to: "navbar"});
@@ -32,60 +32,45 @@ Accounts.ui.config({
 
 
 Template.messages.helpers({
-	
-	foo (){
-		var msgs = "";
-		for(i=0;i<Tst.find().count();i++){
-			msgs = msgs + Tst.find().fetch()[i].text +"<br>"+ Tst.find().fetch()[i].author +"<br>"+Tst.find().fetch()[i].tags+"<br>";
-		}
+	messages (){
+		var msgs = Messages.find();
+		//var msgs = Tst.find();
 		return msgs;
 	}
-/*INCOMPLETE
-	for(i=0;i<Messages.find().count();i++){
-	console.log("Message text is: "+Messages.find().fetch()[i].text);
-	console.log("Created by: "+Messages.find().fetch()[i].author);
-	console.log("At time: "+Messages.find().fetch()[i].time);
-	console.log("With tags: "+Messages.find().fetch()[i].tags);
-	*/
 });
 
-///// USE a Template helper to load the messages
 
 //Message insertion
-
-
-
-//improve coding
-var main = function() {
-
-	$('form').submit(function(event){
-		var $input = $(event.target).find('input');
-		var comment = $input.val();
-
-		if (comment != ""){
-			var timestamp = new Date($.now()).toLocaleString();
-			var tags = $('#tags').val();
-			var html = $("<span class= \"badge\">"+ Meteor.user().username + " - " + timestamp + "</span>"+ "<li>" + comment + "</li>"
-				+ "<span class=\"label label-primary\">"+ tags +"</span> <p> </p>");
-			html.prependTo('#comments');
-			$input.val("");//clear after insertion
-
-			//insert the message into the DB
-			
-			/*
-			Messages.insert({
-				comment,	
-				tags,
-				timestamp,
-				Meteor.user().username
-			});
-			console.log(Messages.find());
-			*/
-		}
+Template.inputMessages.events({
+	'submit form':function(event){
 		
-		return false;
-	});
 
-}
+		//we test whether the user is logged in or not. If not, we won't allow insertion.
+		if(Meteor.user()){
+			var time = new Date();
+			var author = Meteor.user().username;
+			var text = $(comment).val();
+			var tags = $(tags).val();
 
-$(document).ready(main);
+			if ((text != "") && (tags != "")){
+				
+				/*
+				//Insert into DB
+				Messages.insert({
+				author: author, 
+				time: time, 
+				tags: tags,//ATTENTION! MUST BE AN ARRAY - separate its elements 
+				text: text
+				});
+				*/
+
+				//some jQuery to append the message into the current view (if it is not >10-20 msgs)
+				var html = $("<span class=\"badge\">"+author+" - "+time+"</span>"+"<li>"+text+"</li>"+"<span class=\"label label-primary\"> TAGS: "+tags+"</span>");
+				html.prependTo('#comments');
+				$(comment).val("");
+			}
+
+		return false; // we avoid the default operation of the event handler (here is a "reload the page" when we press 'save' in the form)	
+		}
+	}
+});

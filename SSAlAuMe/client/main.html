@@ -52,10 +52,12 @@
   <form class="form">
           <div class="col-xs-8 col-md-10">
             <input id="comment" type="text" placeholder="share your thoughts">
-            <input id="tags" type="text" value="html,input,tag" data-role="tagsinput">
+            <input id="tags" type="text" data-role="tagsinput" placeholder="input your tags">
+            <!--<input id="tags" type="text" value="html,input,tag" data-role="tagsinput"> -->
           </div>
           <div class="col-xs-4 col-md-2">
-            <button type="submit" id="buttonpost">post</button>     
+            <button type="submit" id="buttonpost">post</button>
+            <!--<button type="button" id="buttonpost">post</button>-->  
           </div>      
         </form>
 </template>
@@ -74,18 +76,23 @@
 <template name="messages">
   <ul class="comments" id="comments">
   
-    
-
-    {{foo}}
-    <!--
-    {{#each tst}}
-    <label id="msg-author"> {{author}} </label>
+    <!-- for each element of the "Collection.find()" object -->
+    {{#each messages}}    
+    <span class="badge"> {{author}} - {{time}} </span>
     <li id="msg-text"> {{text}} </li>
+    <span class="label label-primary">TAGS: {{tags}}</span>
+
+    
+    <!--
+    <li id="msg-text"> {{text}} </li>
+    <div>
+    <label id="msg-author"> {{author}} </label>
     <li id="msg-tags"> {{tags}} </li>
     <li id="msg-time"> {{time}} </li>
-    {{/each}}
+    </div>
     -->
-  
+    {{/each}}
+
   </ul>
 </template>
 

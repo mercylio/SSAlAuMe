@@ -7,21 +7,6 @@
 //Messages.find().fetch()[0].text;
 */
 Meteor.startup(function(){
-	if(Tst.find().count() == 0){
-		Tst.insert({author: "Anonymus1",tags: "Pizza, Pasta, Spaghetti", text: "Hellooooo! It's me"});
-		Tst.insert({author: "Anonymus2",tags: "Pizza, Spaghetti", text: "Ahooo! What do you want?"});
-		Tst.insert({author: "Anonymus3",tags: "Pizza, Pasta, Spaghetti", text: "I've been wondering..."});
-		Tst.insert({author: "Anonymus1",tags: "Pasta, Spaghetti", text: "Dude... what?!?!"});
-
-		console.log("Found "+Tst.find().count()+" messages into the Database");
-
-		for(i=0;i<Tst.find().count();i++){
-			console.log("Message text is: "+Tst.find().fetch()[i].text);
-			console.log("Created by: "+Tst.find().fetch()[i].author);
-			console.log("With tags: "+Tst.find().fetch()[i].tags);
-		}
-	}
-
 	// if Collection is empty, create a new message. To clean the DB remember: meteor reset (on the terminal)
 	if (Messages.find().count() == 0){
 		var defaultAuthor = "Anonymus";
@@ -37,6 +22,22 @@ Meteor.startup(function(){
 			console.log("Created by: "+Messages.find().fetch()[i].author);
 			console.log("At time: "+Messages.find().fetch()[i].time);
 			console.log("With tags: "+Messages.find().fetch()[i].tags);
+	}
+
+	//another Collection of messages - for testing purposes
+	if(Tst.find().count() == 0){
+		Tst.insert({author: "Anonymus1",tags: "Pizza, Pasta, Spaghetti", text: "Hellooooo! It's me"});
+		Tst.insert({author: "Anonymus2",tags: "Pizza, Spaghetti", text: "Ahooo! What do you want?"});
+		Tst.insert({author: "Anonymus3",tags: "Pizza, Pasta, Spaghetti", text: "I've been wondering..."});
+		Tst.insert({author: "Anonymus1",tags: "Pasta, Spaghetti", text: "Dude... what?!?!"});
+
+		console.log("Found "+Tst.find().count()+" messages into the Database");
+
+		for(i=0;i<Tst.find().count();i++){
+			console.log("Message text is: "+Tst.find().fetch()[i].text);
+			console.log("Created by: "+Tst.find().fetch()[i].author);
+			console.log("With tags: "+Tst.find().fetch()[i].tags);
+		}
 	}
 }
 });
