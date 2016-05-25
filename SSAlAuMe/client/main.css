@@ -38,14 +38,10 @@ form input:focus { /* will only apply to the form when it's focused*/
 #buttonpost {
 	background: transparent;
 	border: 2px solid #000;
-
 	color: #00f28f;
 	cursor: pointer;
-	
 	font-size: 36px;
-
 	padding: 20px 24px; /*first number of the pair, applies to top & bottom; the second to left-right*/
-
 	transition: background 2s, border-left 2s;
 }
 
@@ -58,6 +54,7 @@ form input:focus { /* will only apply to the form when it's focused*/
 	background: transparent;
 	border: 2px solid #000;
 	color: #ff0000;
+	cursor: not-allowed;
 	font-size: 36px;
 	padding: 20px 24px;
 	transition: background 2s, border-left 2s;

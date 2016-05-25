@@ -1,4 +1,5 @@
 Messages = new Mongo.Collection("messages");
+Tst = new Mongo.Collection("tst");
 
 /* 
 Every collection includes an  _id  property, whose value is unique in the collection, 
@@ -20,7 +21,6 @@ Our Messages Collection's structure should be like this:
 }
 
 Little tips & tricks on retrieval of files inside Mongo Collections:
-
 //find() parses back a "cursor" (a special object containing the 'documents' of the collection & other metadata), which can be used to access more documents
 //findOne directly gives you back a document
 //find().fetch()[arrayNr].keysearchedfor  using fetch() on the "cursor" gives back all the documents as an array, which is more like findOne()
@@ -29,24 +29,9 @@ Little tips & tricks on retrieval of files inside Mongo Collections:
 */
 
 
-// if Collection is empty, create a new message. To clean the DB remember: meteor reset (on the terminal)
-if (Messages.find().count() == 0){
-	var defaultAuthor = "Anonymus";
-	var date = new Date();
-	var createdAt = date.toString();
-	var defaultTags = ["TAG1","TAG2","TAG3"];
-	var defaultText = "Hello world! Let's get some posts on this message board!"
-	Messages.insert({author: defaultAuthor, time: createdAt, tags: defaultTags, text: defaultText});
-}
 
-//check on the terminal the messages of our DB
-console.log("Found "+Messages.find().count()+" messages into the Database");
-for(i=0;i<Messages.find().count();i++){
-	console.log("Message text is: "+Messages.find().fetch()[i].text);
-	console.log("Created by: "+Messages.find().fetch()[i].author);
-	console.log("At time: "+Messages.find().fetch()[i].time);
-	console.log("With tags: "+Messages.find().fetch()[i].tags);
-}
+
+
 
 //security for messages - must be logged in before posting
 /*

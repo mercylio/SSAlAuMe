@@ -10,25 +10,20 @@ Router.configure({
 });
 
 Router.route('/', function () {
-	if(Meteor.user()){
+	if(Meteor.user()){//if logged in user
 		this.render('navbar', {to: "navbar"});
+		this.render('msgContainer', {to: "msgContainer"});
 		this.render('messages', {to: "messages"});
-		this.render('input-messages', {to: "input-messages"});
+		this.render('input-messages', {to: "inputMessages"});
 	}
-	else {
+	else {//if anonymous
 		this.render('navbar', {to: "navbar"});
+		this.render('msgContainer', {to: "msgContainer"});
 		this.render('messages', {to: "messages"});
-		this.render('not-allowed-to-post', {to: "input-messages"});
+		this.render('notAllowedToPost', {to: "inputMessages"});//not allowed
 	}
 });
 
-
-/*
- Template.header.onCreated(function onSSAlaAuMECreated() {
-   // Should be the logged in user
-  	 author = "Anonymous";
- });
- */
 
 /// accounts configuration
 Accounts.ui.config({
@@ -36,6 +31,23 @@ Accounts.ui.config({
 });
 
 
+Template.messages.helpers({
+	
+	foo (){
+		var msgs = "";
+		for(i=0;i<Tst.find().count();i++){
+			msgs = msgs + Tst.find().fetch()[i].text +"<br>"+ Tst.find().fetch()[i].author +"<br>"+Tst.find().fetch()[i].tags+"<br>";
+		}
+		return msgs;
+	}
+/*INCOMPLETE
+	for(i=0;i<Messages.find().count();i++){
+	console.log("Message text is: "+Messages.find().fetch()[i].text);
+	console.log("Created by: "+Messages.find().fetch()[i].author);
+	console.log("At time: "+Messages.find().fetch()[i].time);
+	console.log("With tags: "+Messages.find().fetch()[i].tags);
+	*/
+});
 
 ///// USE a Template helper to load the messages
 

@@ -17,37 +17,38 @@
 <!--TEMPLATES-->
 <template name="ApplicationLayout">
   {{> yield "navbar"}}
-  {{> yield "messages"}}
+  {{> yield "msgContainer"}}
 </template>
 
 <template name="navbar">
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
-      <h1>SSAlAuMe</h1> {{> loginButtons}}
+      <h1>SSAlAuMe - Gossip Chat and more!</h1> {{> loginButtons}}
     </div>
   </nav>
 </template>
 
-<template name="messages">
+<template name="msgContainer">
 <!-- MAX 10-20 messages per page? -->
   <div class="main">
     <div class="container">
       <div class="row">
-        {{> yield "input-messages"}}
+        {{> yield "inputMessages"}}
 
-        <ul class="comments" id="comments">
-          <label>Anoymous</label>
-          <li>Have you felt it?</li>
-          <label>Anonymous</label>
-          <li>There has been an awakening!</li>
-        </ul>
-
+        
+          {{> yield "messages"}}
+          <!--
+          <label id="msg-author">Anoymous</label>
+          <li id="msg-text">Have you felt it?</li>
+          <li id="msg-tags">TAG</li>
+          <li id="msg-time">TIME</li>
+          -->
       </div>
     </div>
   </div>
 </template>
 
-<template name="input-messages">
+<template name="inputMessages">
   <form class="form">
           <div class="col-xs-8 col-md-10">
             <input id="comment" type="text" placeholder="share your thoughts">
@@ -59,18 +60,37 @@
         </form>
 </template>
 
-<template name="not-allowed-to-post">
+<template name="notAllowedToPost">
   <form class="form">
           <div class="col-xs-8 col-md-10">
             <input id="not-allowed" type="text" placeholder="Sign up / sign in to share your thoughts" disabled>
           </div>
           <div class="col-xs-4 col-md-2">
-            <button class="btn btn-warning" id="btnnotloggedin" data-dismiss="modal" disabled>post</button>     
+            <button class="btn btn-warning" id="btnnotloggedin" data-dismiss="modal" disabled>post</button>
           </div>     
         </form>
 </template>
 
-<template name="messages-nav">
+<template name="messages">
+  <ul class="comments" id="comments">
+  
+    
+
+    {{foo}}
+    <!--
+    {{#each tst}}
+    <label id="msg-author"> {{author}} </label>
+    <li id="msg-text"> {{text}} </li>
+    <li id="msg-tags"> {{tags}} </li>
+    <li id="msg-time"> {{time}} </li>
+    {{/each}}
+    -->
+  
+  </ul>
+</template>
+
+
+<template name="messagesNav">
   <!-- put the navigation here
 
 first case: homepage
