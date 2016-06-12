@@ -9,7 +9,7 @@ Router.configure({
 	layoutTemplate: 'ApplicationLayout'//the default template we're going to use, is called ApplicationLayout, which will be a super template, into which we can insert other templates. So we will have one global layout, and we can swap out the components
 });
 
-Router.route('/', function () {
+Router.route('/:page?', function () {
 	if(Meteor.user()){//if logged in user
 		this.render('navbar', {to: "navbar"});
 		this.render('msgContainer', {to: "msgContainer"});
@@ -30,10 +30,10 @@ Accounts.ui.config({
     passwordSignupFields: "USERNAME_AND_EMAIL"
 });
 
-//Method for filtering messages by tag 
-Template.messages.helpers({
 
+Template.messages.helpers({
 	messages (){
+<<<<<<< HEAD
 		
 	var msgs;
 	//Should we validate it?
@@ -42,10 +42,13 @@ Template.messages.helpers({
 		//msgs = Messages.find({"tags: " + tag});
 		
 			return msgs;
+=======
+		var msgs = Messages.find();
+		//var msgs = Tst.find();
+		return msgs;
+>>>>>>> 4ca229465a66d94a2bb882a8b676d9da4d0855ba
 	}
-
 });
-
 
 
 //Message insertion
@@ -82,3 +85,49 @@ Template.inputMessages.events({
 		}
 	}
 });
+
+ //Pagination
+ Template.messages.onCreated(function() {
+  var template = this;
+
+  template.autorun(function(){
+  	var skipCount = (currentPage() - 1) * Meteor.settings.public.recordsPerPage;
+    template.subscribe('customers', skipCount);
+  });
+});
+ Template.messages.helpers({
+  customers: function() {
+    return Messages.find();
+  },
+  prevPage: function() {
+    var previousPage = currentPage === 1 ? 1 : currentPage - 1;
+    return Router.routes.messages.path({page: previousPage});
+  },
+  nextPage: function() {
+    var nextPage = hasMorePages() ? currentPage() + 1 : currentPage();
+    return Router.routes.messages.path({page: nextPage});
+  },
+  prevPageClass: function() {
+    return currentPage() <= 1 ? "disabled" : "";
+  },
+  nextPageClass: function() {
+    return hasMorePages() ? "" : "disabled";
+  }
+});
+
+Template.messages.events({
+	'click #btnAddMessage': function(e) {
+    e.preventDefault();
+
+    Router.go('addMessage');
+  }
+});
+
+ var hasMorePages = function() {
+  var totalCustomers = Counts.get('customerCount');
+  return currentPage() * parseInt(Meteor.settings.public.recordsPerPage) < totalCustomers;
+}
+
+var currentPage = function() {
+  return parseInt(Router.current().params.page) || 1; 
+}
