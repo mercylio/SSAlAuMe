@@ -2,9 +2,12 @@
   <title>SSAlAuMe - Chat and Share your thoughts!</title>
   <!-- Clean up some things / remove unnecessary stuff-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
   <link rel="stylesheet" href="http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
   <link rel="stylesheet" href="style.css" />
   <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'/>
+ 
+
 </head>
 <body>
 
@@ -12,6 +15,8 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 <script src="http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
 <script type="text/javascript" src="main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+
 </body>
 
 <!--TEMPLATES-->
@@ -25,22 +30,21 @@
     <div class="container">
       <h1>SSAlAuMe - Gossip Chat and more!</h1> {{> loginButtons}}
     
+    <!-- Selector from https://silviomoreto.github.io/bootstrap-select/methods/-->
     <div class="row">
   <div class="col-lg-6">
     <div class="input-group">
       <div class="input-group-btn">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter <span class="caret"></span></button>
-        <ul class="dropdown-menu col-xs-12">
-          <li class="li-filter"><a href="#bydate">By date</a></li>
-          <li class="li-filter"><a href="#byauthor">By author</a></li>
-          <li class="li-filter"><a href="#bytag">By tag</a></li>
-         
-        </ul>
+       <select class="selectpicker show-tick">
+        <option>By author</option>
+        <option>By tag</option>
+        <option>By date</option>
+</select>
       </div><!-- /btn-group -->
          <input type="text" class="form-control" aria-label="...">
     </div><!-- /input-group -->
     </div>
-          <button id="goFilter" class="btn btn-default" type="button">Go!</button>
+          <button id="goFilter" class="btn btn-default" type="button">Filter</button>
 
   </div>
 

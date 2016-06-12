@@ -37,7 +37,10 @@ Template.messages.helpers({
 	var msgs;
 	//Should we validate it?
 	
-		var tag = $("#searchinput").val();
+		var keyword = $("#searchinput").val();
+		var filtertype;
+
+		
 		//msgs = Messages.find({"tags: " + tag});
 		
 			return msgs;
