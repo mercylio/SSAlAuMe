@@ -156,12 +156,17 @@ Template.messages.onCreated(function() {
 
   template.autorun(function(){
   	var skipCount = (currentPage() - 1) * Meteor.settings.public.recordsPerPage;
-    template.subscribe('messages', skipCount);
+    template.subscribe('Messages', skipCount);
   });
 });
+<<<<<<< HEAD
 
 Template.messages.helpers({
   customers: function() {
+=======
+ Template.messages.helpers({
+  Messages: function() {
+>>>>>>> 7c871b6b4a0f480db656fccb8d29ac797f59d32a
     return Messages.find();
   },
   prevPage: function() {
