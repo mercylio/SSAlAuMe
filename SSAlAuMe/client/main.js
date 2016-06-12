@@ -36,7 +36,6 @@ Template.messages.helpers({
 	messages (){
 		
 	var msgs;
-
 	//Should we validate it?
 	
 		var tag = $("#searchinput").val();

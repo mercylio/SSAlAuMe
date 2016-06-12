@@ -24,20 +24,26 @@
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <h1>SSAlAuMe - Gossip Chat and more!</h1> {{> loginButtons}}
-      <div class="col-xs-8 col-md-10">
-        <div class="dropdown">
-          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-              Author
-            <span class="caret"></span>
-          </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li><a href="#">Tag</a></li>
-                <li><a href="#">Date</a></li>
-              </ul>
-            </div>
-            <input id="searchInput" type="text, tag" placeholder="Input a keyword to search for...">
-            <input id="searchSubmit" type="submit" value="Search">
-          </div>
+    
+    <div class="row">
+  <div class="col-lg-6">
+    <div class="input-group">
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter <span class="caret"></span></button>
+        <ul class="dropdown-menu col-xs-12">
+          <li class="li-filter"><a href="#bydate">By date</a></li>
+          <li class="li-filter"><a href="#byauthor">By author</a></li>
+          <li class="li-filter"><a href="#bytag">By tag</a></li>
+         
+        </ul>
+      </div><!-- /btn-group -->
+         <input type="text" class="form-control" aria-label="...">
+    </div><!-- /input-group -->
+    </div>
+          <button id="goFilter"class="btn btn-default" type="button">Go!</button>
+
+  </div>
+
     </div>
   </nav>
 </template>
