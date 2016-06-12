@@ -117,11 +117,11 @@ Template.inputMessages.events({
 
   template.autorun(function(){
   	var skipCount = (currentPage() - 1) * Meteor.settings.public.recordsPerPage;
-    template.subscribe('messages', skipCount);
+    template.subscribe('Messages', skipCount);
   });
 });
  Template.messages.helpers({
-  customers: function() {
+  Messages: function() {
     return Messages.find();
   },
   prevPage: function() {

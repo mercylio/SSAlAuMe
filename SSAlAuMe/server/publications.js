@@ -1,9 +1,9 @@
-Meteor.publish('messages', function(skipCount) {
-	Meteor._sleepForMs(1000);
-  var positiveIntegerCheck = Match.Where(function(x) {
-    check(x, Match.Integer);
-    return x >= 0;
-  });
+Meteor.publish('Messages', function(skipCount) {
+	// Meteor._sleepForMs(1000);
+ //  var positiveIntegerCheck = Match.Where(function(x) {
+ //    check(x, Match.Integer);
+ //    return x >= 0;
+ //  });
   check(skipCount, positiveIntegerCheck);
   
   Counts.publish(this, 'messagesCount', messages.find(),{
