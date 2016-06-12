@@ -83,27 +83,66 @@ Template.inputMessages.events({
 
 		//we test whether the user is logged in or not. If not, we won't allow insertion.
 		if(Meteor.user()){
-			var time = new Date();
-			var author = Meteor.user().username;
+
+			//TODO: do the check on string length here
 			var text = $("#commentbox").val();
-			var tags = $("#tagsbox").val();
+			var tagsbox = $("#tagsbox").val();
 
-			if ((text != "") && (tags != "")){
-				
-				/*
-				//Insert into DB
-				Messages.insert({
-				author: author, 
-				time: time, 
-				tags: tags,//ATTENTION! MUST BE AN ARRAY - separate its elements 
-				text: text
-				});
-				*/
+			if ((text != "") && (tagsbox != "")){
+				//max lenght allowed: 140 textbox (like Twitter), 140 also for tags
+				if ((text.length < 140) && (tagsbox.length < 140)){
+					
+					var time = new Date();
+					var author = Meteor.user().username;
 
-				//some jQuery to append the message into the current view (if it is not >10-20 msgs)
-				var html = $("<span class=\"badge\">"+author+" - "+time+"</span>"+"<span class=\"label label-primary\"> TAGS: "+tags+"</span>"+"<li>"+text+"</li>");
-				html.prependTo('#comments');
-				$("#commentbox").val("");
+					//split tags and exclude eventual "," or words after
+					var tags = tagsbox.split(",");
+					/*
+					//CHECK WHAT TAGS have been extracted from the input
+					for(var i=0;i<tags.length;i++){
+						console.log("ELEMENT nr: "+i+" of Tags. Value: "+tags[i]);
+					}*/
+					//console.log(tags+"_TAGS: just extracted:\n\n");
+
+					//PURGE from empty values
+					var purgedTags = [];
+					for(var i=0;i<tags.length;i++){
+						if(tags[i]){
+							purgedTags.push(tags[i]);
+						}
+					}
+					//console.log(purgedTags+"_PURGED from commas:\n\n");
+					purgedTags.sort();
+					//console.log(purgedTags+"_PURGED & SORTED!:\n\n");
+
+					//CHECK DUPLICATE TAGS
+					function unique(list) {
+					    var result = [];
+					    $.each(list, function(i, e) {
+					        if ($.inArray(e, result) == -1) result.push(e);
+					    });
+					    return result;
+					}
+
+					var cleanTags = unique(purgedTags);
+					//console.log(cleanTags);
+					
+					//Insert into DB
+					Messages.insert({
+						author: author,
+						time: time, 
+						tags: cleanTags, 
+						text: text
+					});
+
+					//some jQuery to append the message into the current view (if it is not >10-20 msgs)
+					var html = $("<span class=\"badge\">"+author+" - "+time+"</span>"+"<span class=\"label label-primary\"> TAGS: "+cleanTags.toString()+"</span>"+"<li>"+text+"</li>");
+					//html.prependTo('#comments');
+					$("#commentbox").val("");
+				}
+
+				//ELSE output a message for the USER: "NOT ALLOWED! you entered more than "
+				//TODOOO
 			}
 
 		return false; // we avoid the default operation of the event handler (here is a "reload the page" when we press 'save' in the form)	
@@ -111,8 +150,8 @@ Template.inputMessages.events({
 	}
 });
 
- //Pagination
- Template.messages.onCreated(function() {
+//Pagination
+Template.messages.onCreated(function() {
   var template = this;
 
   template.autorun(function(){
@@ -120,7 +159,8 @@ Template.inputMessages.events({
     template.subscribe('messages', skipCount);
   });
 });
- Template.messages.helpers({
+
+Template.messages.helpers({
   customers: function() {
     return Messages.find();
   },
