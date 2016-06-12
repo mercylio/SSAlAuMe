@@ -34,7 +34,7 @@ Accounts.ui.config({
 Template.messages.helpers({
 	messages (){
 
-		var msgs = Messages.find();
+		var msgs = Messages.find({}, {sort:{'time': -1}, limit: 10});
 		return msgs;
 	}
 });
@@ -108,7 +108,7 @@ Template.inputMessages.events({
 					var purgedTags = [];
 					for(var i=0;i<tags.length;i++){
 						if(tags[i]){
-							purgedTags.push(tags[i]);
+							purgedTags.push(tags[i].trim());
 						}
 					}
 					//console.log(purgedTags+"_PURGED from commas:\n\n");
@@ -156,17 +156,12 @@ Template.messages.onCreated(function() {
 
   template.autorun(function(){
   	var skipCount = (currentPage() - 1) * Meteor.settings.public.recordsPerPage;
-    template.subscribe('Messages', skipCount);
+    template.subscribe('messages', skipCount);
   });
 });
-<<<<<<< HEAD
 
 Template.messages.helpers({
   customers: function() {
-=======
- Template.messages.helpers({
-  Messages: function() {
->>>>>>> 7c871b6b4a0f480db656fccb8d29ac797f59d32a
     return Messages.find();
   },
   prevPage: function() {
