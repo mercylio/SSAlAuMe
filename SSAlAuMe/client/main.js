@@ -50,13 +50,13 @@ Template.navbar.events({
 		switch (filtertype) {
 			case 'author':
 
-			//msgs = Messages.find({"author: " + keyword});
+			//msgs = Messages.find({"author: " + keyword}, {sort: {time: -1}});
 
 			break;
 
 			case 'tag':
 
-			//msgs = Messages.find({"tags: " + keyword});
+			//msgs = Messages.find({"tags: " + keyword}, {sort: {time: -1}});
 
 			break;
 
@@ -69,6 +69,8 @@ Template.navbar.events({
 
 		//Should return messages saved in msgs and display them
 		//below
+
+
 
 	}
 });
