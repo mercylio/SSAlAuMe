@@ -33,7 +33,6 @@ Accounts.ui.config({
 
 Template.messages.helpers({
 	messages (){
-<<<<<<< HEAD
 		
 	var msgs;
 	//Should we validate it?
@@ -42,11 +41,9 @@ Template.messages.helpers({
 		//msgs = Messages.find({"tags: " + tag});
 		
 			return msgs;
-=======
 		var msgs = Messages.find();
 		//var msgs = Tst.find();
 		return msgs;
->>>>>>> 4ca229465a66d94a2bb882a8b676d9da4d0855ba
 	}
 });
 
