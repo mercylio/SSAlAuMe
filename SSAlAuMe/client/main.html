@@ -30,24 +30,27 @@
     <div class="container">
       <h1>SSAlAuMe - Gossip Chat and more!</h1> {{> loginButtons}}
     
+      <form class="form">
+          <div class="col-xs-8 col-md-10">
     <!-- Selector from https://silviomoreto.github.io/bootstrap-select/methods/-->
     <div class="row">
   <div class="col-lg-6">
     <div class="input-group">
       <div class="input-group-btn">
-       <select class="selectpicker show-tick">
-        <option>By author</option>
-        <option>By tag</option>
-        <option>By date</option>
+       <select  id="filterSelect" class="selectpicker show-tick">
+        <option class="option-custom" value="author">By author</option>
+        <option class="option-custom" value="tag">By tag</option>
+        <option class="option-custom" value="date">By date</option>
 </select>
       </div><!-- /btn-group -->
          <input type="text" class="form-control" aria-label="...">
     </div><!-- /input-group -->
     </div>
-          <button id="goFilter" class="btn btn-default" type="button">Filter</button>
+          <button id="goFilter" class="btn btn-default" type="submit">Filter</button>
 
   </div>
-
+</div>
+</form>
     </div>
   </nav>
 </template>
@@ -73,12 +76,12 @@
 <template name="inputMessages">
   <form class="form">
           <div class="col-xs-8 col-md-10">
-            <input id="commentbox" type="text" placeholder="share your thoughts">
+            <input id="commentbox" type="text" placeholder="Share your thoughts!">
             <input id="tagsbox" type="text" placeholder="input your tags">
             <!--<input id="tags" type="text" value="html,input,tag" data-role="tagsinput"> -->
           </div>
           <div class="col-xs-4 col-md-2">
-            <button type="submit" id="buttonpost">post</button>
+            <button type="submit" id="buttonpost">Post</button>
             <!--<button type="button" id="buttonpost">post</button>-->  
           </div>      
         </form>

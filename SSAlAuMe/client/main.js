@@ -33,20 +33,43 @@ Accounts.ui.config({
 
 Template.messages.helpers({
 	messages (){
-		
-	var msgs;
-	//Should we validate it?
-	
-		var keyword = $("#searchinput").val();
-		var filtertype;
 
-		
-		//msgs = Messages.find({"tags: " + tag});
-		
-			return msgs;
 		var msgs = Messages.find();
-		//var msgs = Tst.find();
 		return msgs;
+	}
+});
+
+//When filter button is pressed
+Template.navbar.events({
+
+'submit form':function(event) {
+
+		var keyword = $("#searchinput").val();
+		var filtertype = $('#filterSelect').val();
+
+		switch (filtertype) {
+			case 'author':
+
+			//msgs = Messages.find({"author: " + keyword});
+
+			break;
+
+			case 'tag':
+
+			//msgs = Messages.find({"tags: " + keyword});
+
+			break;
+
+			case 'date' :
+
+			//msgs= Messages.find({}, {sort: {time: -1}});
+
+			break;
+		}
+
+		//Should return messages saved in msgs and display them
+		//below
+
 	}
 });
 
@@ -92,7 +115,7 @@ Template.inputMessages.events({
 
   template.autorun(function(){
   	var skipCount = (currentPage() - 1) * Meteor.settings.public.recordsPerPage;
-    template.subscribe('customers', skipCount);
+    template.subscribe('messages', skipCount);
   });
 });
  Template.messages.helpers({
@@ -124,8 +147,8 @@ Template.messages.events({
 });
 
  var hasMorePages = function() {
-  var totalCustomers = Counts.get('customerCount');
-  return currentPage() * parseInt(Meteor.settings.public.recordsPerPage) < totalCustomers;
+  var totalMessages = Counts.get('messagesCount');
+  return currentPage() * parseInt(Meteor.settings.public.recordsPerPage) < totalMessages;
 }
 
 var currentPage = function() {
