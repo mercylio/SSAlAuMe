@@ -30,14 +30,23 @@ Accounts.ui.config({
     passwordSignupFields: "USERNAME_AND_EMAIL"
 });
 
-
+//Method for filtering messages by tag 
 Template.messages.helpers({
+
 	messages (){
-		var msgs = Messages.find();
-		//var msgs = Tst.find();
-		return msgs;
+		
+	var msgs;
+
+	//Should we validate it?
+	
+		var tag = $("#searchinput").val();
+		//msgs = Messages.find({"tags: " + tag});
+		
+			return msgs;
 	}
+
 });
+
 
 
 //Message insertion
