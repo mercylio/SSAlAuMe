@@ -24,6 +24,23 @@ Router.route('/:page?', function () {
 	}
 });
 
+ //Infinite Scroll
+Session.set("messageLimit", 10);
+lastScrollTop = 0;
+$(window).scroll(function(event){
+	//test if we're near the bottom of the window
+	if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+		//where are we?
+		var scrollTop = $(this).scrollTop();
+		//test if we are going down
+		if(scrollTop > lastScrollTop){
+			//yes we're going down
+			Session.set("messageLimit", Session.get("messageLimit") + 4);
+		}
+		lastScrollTop = scrollTop;
+
+	}
+});
 
 /// accounts configuration
 Accounts.ui.config({
@@ -34,7 +51,8 @@ Accounts.ui.config({
 Template.messages.helpers({
 	messages (){
 
-		var msgs = Messages.find({}, {sort:{'time': -1}, limit: 20});
+		//var msgs = Messages.find({}, {sort:{'time': -1}, limit: 10});
+		var msgs = Messages.find({}, {sort:{'time': -1}, limit:Session.get("messageLimit") });
 		return msgs;
 	}
 });
