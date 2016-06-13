@@ -100,12 +100,14 @@
   </form>
 
   <!-- MESSAGES -->
+  <br />
   <ul class="comments" id="comments">
     <!-- for each element of the "Collection.find()" object -->
     {{#each messages}}  
     <!-- <span class="badge"> {{author}} - {{time}} </span> -->
-    <span class="badge"> {{author}} </span>
-    <span class="time">{{time}} </span>
+    <br />
+    <span id="author" class="badge"> {{author}} </span>
+    <span class="badge">{{time}} </span>
     <span class="label label-primary">TAGS: {{tags}}</span>
     <li id="msg-text"> {{text}} </li>
     {{/each}}
