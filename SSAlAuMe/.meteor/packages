@@ -21,8 +21,9 @@ accounts-ui
 accounts-password
 iron:router
 twbs:bootstrap
-insecure
 tmeasday:publish-counts
 alanning:roles
 check
 session
+meteorhacks:sikka
+em0ney:honeypot

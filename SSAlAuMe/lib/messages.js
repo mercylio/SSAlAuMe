@@ -1,6 +1,24 @@
 Messages = new Mongo.Collection("messages");
 Tst = new Mongo.Collection("tst");
 
+
+//set up security on Images collection
+Messages.allow({
+	insert:function(){
+		if (Meteor.user()){ //if user logged in
+			//image must be owned by the user:
+			//if the user is not the author, then it shall not be allowed to do the operation. Return false
+			
+			return true;
+			
+		}
+		else { //if user is not logged in
+			return false;
+		}
+	}
+})
+
+
 /* 
 Every collection includes an  _id  property, whose value is unique in the collection, 
 which Meteor will set when you first create the document.
