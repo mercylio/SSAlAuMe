@@ -14,9 +14,41 @@ Meteor.startup(function(){
 		var createdAt = date.toString();
 		var defaultTags = ["TAG1","TAG2","TAG3"];
 		var defaultText = "Hello world! Let's get some posts on this message board!"
-		Messages.insert({author: defaultAuthor, time: createdAt, tags: defaultTags, text: defaultText});
+		
+		//Messages.insert({author: defaultAuthor, time: createdAt, tags: defaultTags, text: defaultText});
+		
 		//check on the terminal the messages of our DB
+		var randauthor = ["NoOne","H4CK3R","AsdRoflMao","Pig","GorillaScream","MonkeyFace","HotBarbie","GIGANTISCH"];
+		var randtags = ["Bla","Bla Bla Bla", "Deadmau5", "Porn", "Disco", "Frank Sinatra", "L33T", "Mega", "TOP", "Summer2016", "WoW", "Raid"];
+		var randtext = ["FFS, This is so crazy!!","I can't believe it!","Hey, visit my website: www.unibz.it", "CLOSE DAT FRIDGE!", "Anybody online?", "Looking for group", "HAHAHHAHA", "Banana Muffin is good at 2AM", "No Sleep", "Gosh, this website sucks...", "No, it doesn't", "BEACH, PLEASE!", "XSS HAIUHUIDHAUSHDIUHAUISDIUGAIYSTDIUYAIU", "F+++++++!!!!!!", "Meteor is sooo COOOL!", "=) =) =| =(","No way....","Hello party people! Who wants to join for a dinner at SUSHI all you can eat???","Who wants to play volleyball? Tomorrow, 8PM at Peter Riegler.","Batzen tonight?"];
+		
+
+		for(var i = 0;i<101;i++){
+			var randAuth = Math.floor(Math.random() * randauthor.length) + 0;
+			var nrOfRandTags = Math.floor(Math.random() * randtags.length) + 3;
+			var arrayOfRandTags = [];
+			for(var j=0;j<nrOfRandTags;j++){
+				var randTag = Math.floor(Math.random() * randtags.length) + 0;
+				arrayOfRandTags.push(randtags[randTag]);
+			}
+			arrayOfRandTags.sort();
+			
+			//CHECK DUPLICATE TAGS
+			var cleanTags = arrayOfRandTags.filter(function(elem,pos){
+				return arrayOfRandTags.indexOf(elem) == pos;
+			});
+
+			
+			var randTxt = Math.floor(Math.random() * randtext.length) + 0;
+			//console.log(randAuth + " _ " + randTag + " _ " + randTxt);
+			var randDate = new Date();
+			var currentTime = randDate.toString();
+			Messages.insert({author: randauthor[randAuth], time: currentTime, tags: cleanTags, text: randtext[randTxt]});
+		}
+
 		console.log("Found "+Messages.find().count()+" messages into the Database");
+		
+		//PRINT THE MESSAGES
 		for(i=0;i<Messages.find().count();i++){
 			console.log("Message text is: "+Messages.find().fetch()[i].text);
 			console.log("Created by: "+Messages.find().fetch()[i].author);
@@ -24,20 +56,5 @@ Meteor.startup(function(){
 			console.log("With tags: "+Messages.find().fetch()[i].tags);
 	}
 
-	//another Collection of messages - for testing purposes
-	if(Tst.find().count() == 0){
-		Tst.insert({author: "Anonymus1",tags: "Pizza, Pasta, Spaghetti", text: "Hellooooo! It's me"});
-		Tst.insert({author: "Anonymus2",tags: "Pizza, Spaghetti", text: "Ahooo! What do you want?"});
-		Tst.insert({author: "Anonymus3",tags: "Pizza, Pasta, Spaghetti", text: "I've been wondering..."});
-		Tst.insert({author: "Anonymus1",tags: "Pasta, Spaghetti", text: "Dude... what?!?!"});
-
-		console.log("Found "+Tst.find().count()+" messages into the Database");
-
-		for(i=0;i<Tst.find().count();i++){
-			console.log("Message text is: "+Tst.find().fetch()[i].text);
-			console.log("Created by: "+Tst.find().fetch()[i].author);
-			console.log("With tags: "+Tst.find().fetch()[i].tags);
-		}
-	}
 }
 });

@@ -34,7 +34,7 @@ Accounts.ui.config({
 Template.messages.helpers({
 	messages (){
 
-		var msgs = Messages.find({}, {sort:{'time': -1}, limit: 10});
+		var msgs = Messages.find({}, {sort:{'time': -1}, limit: 20});
 		return msgs;
 	}
 });
