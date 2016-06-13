@@ -53,65 +53,69 @@
 
 <template name="inputMessages">
   <form class="form">
-          <div class="col-xs-8 col-md-10">
-            <input id="commentbox" type="text" placeholder="Share your thoughts!">
-            <input id="tagsbox" type="text" placeholder="input your tags">
-            <!--<input id="tags" type="text" value="html,input,tag" data-role="tagsinput"> -->
-          </div>
-          <div class="col-xs-4 col-md-2">
-            <button type="submit" id="buttonpost">Post</button>
-            <!--<button type="button" id="buttonpost">post</button>-->  
-          </div>      
-        </form>
+    <div class="col-xs-8 col-md-10">
+      <input id="commentbox" type="text" placeholder="Share your thoughts!">
+      <input id="tagsbox" type="text" placeholder="input your tags separated by a comma ','">
+      <!--<input id="tags" type="text" value="html,input,tag" data-role="tagsinput"> -->
+    </div>
+    <div class="col-xs-4 col-md-2">
+      <button type="submit" id="buttonpost">Post</button>
+      <!--<button type="button" id="buttonpost">post</button>-->  
+    </div>      
+  </form>
 </template>
 
 <template name="notAllowedToPost">
   <form class="form">
-          <div class="col-xs-8 col-md-10">
-            <input id="not-allowed" type="text" placeholder="Sign up / sign in to share your thoughts" disabled>
-          </div>
-          <div class="col-xs-4 col-md-2">
-            <button class="btn btn-warning" id="btnnotloggedin" data-dismiss="modal" disabled>post</button>
-          </div>     
-        </form>
+    <div class="col-xs-8 col-md-10">
+      <input id="not-allowed" type="text" placeholder="Sign up / sign in to share your thoughts" disabled>
+    </div>
+    <div class="col-xs-4 col-md-2">
+      <button class="btn btn-warning" id="btnnotloggedin" data-dismiss="modal" disabled>post</button>
+    </div>     
+  </form>
 </template>
 
 <template name="messages">
   <!-- FILTER MESSAGES functionality -->
   <form class="form">
-            <div class="col-xs-8 col-md-10">
+    <div class="col-xs-8 col-md-10">
       <!-- Selector from https://silviomoreto.github.io/bootstrap-select/methods/-->
       <div class="row">
-    <div class="col-lg-6">
-      <div class="input-group">
-        <div class="input-group-btn">
-         <select  id="filterSelect" class="selectpicker show-tick">
-          <option class="option-custom" value="author">By author</option>
-          <option class="option-custom" value="tag">By tag</option>
-          <option class="option-custom" value="date">By date</option>
-  </select>
-        </div><!-- /btn-group -->
-           <input type="text" id="searchinput" class="form-control" aria-label="...">
-      </div><!-- /input-group -->
+        <div class="col-lg-6">
+        <div class="input-group">
+          <div class="input-group-btn">
+           <select  id="filterSelect" class="selectpicker show-tick">
+            <option class="option-custom" value="author">By author</option>
+            <option class="option-custom" value="tag">By tag</option>
+            <option class="option-custom" value="date">By date</option>
+            </select>
+          </div><!-- /btn-group -->
+          <input type="text" id="searchinput" class="form-control" aria-label="...">
+        </div><!-- /input-group -->
       </div>
-      <button id="goFilter" class="btn btn-default" type="submit">Filter</button>
+      <button id="goFilter" class="btn btn-primary" type="submit">Filter</button>
+      <button id="cancelFilter" class="btn btn-default" type="submit">Clear</button>
     </div>
   </div>
   </form>
 
   <!-- MESSAGES -->
-  <br />
+  <br>
+  <div class="container">
   <ul class="comments" id="comments">
     <!-- for each element of the "Collection.find()" object -->
     {{#each messages}}  
     <!-- <span class="badge"> {{author}} - {{time}} </span> -->
-    <br />
+    <div class="row">
     <span id="author" class="badge"> {{author}} </span>
     <span class="badge">{{time}} </span>
     <span class="label label-primary">TAGS: {{tags}}</span>
     <li id="msg-text"> {{text}} </li>
+    </div>
     {{/each}}
   </ul>
+  </div>
 
   <!-- PAGINATION -->
 <!--   <nav>

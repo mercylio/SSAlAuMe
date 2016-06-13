@@ -47,13 +47,35 @@ Accounts.ui.config({
     passwordSignupFields: "USERNAME_AND_EMAIL"
 });
 
+function messages (){
+		var msgs = Messages.find({}, {sort:{'time': -1}, limit:Session.get("messageLimit") });
+		return msgs;
+}
 
 Template.messages.helpers({
 	messages (){
-
 		var msgs = Messages.find({}, {sort:{'time': -1}, limit:Session.get("messageLimit") });
 		return msgs;
 	}
+
+	/*
+	customers: function() {
+    return Messages.find();
+  	},
+  	prevPage: function() {
+    var previousPage = currentPage === 1 ? 1 : currentPage - 1;
+    return Router.routes.messages.path({page: previousPage});
+  	},
+  	nextPage: function() {
+    var nextPage = hasMorePages() ? currentPage() + 1 : currentPage();
+    return Router.routes.messages.path({page: nextPage});
+  	},
+  	prevPageClass: function() {
+    return currentPage() <= 1 ? "disabled" : "";
+  	},
+  	nextPageClass: function() {
+    return hasMorePages() ? "" : "disabled";
+  }*/
 });
 
 
@@ -61,7 +83,7 @@ Template.messages.helpers({
 Template.inputMessages.events({
 	'submit form':function(event){
 		
-
+		Template.helpers
 		//we test whether the user is logged in or not. If not, we won't allow insertion.
 		if(Meteor.user()){
 
@@ -141,25 +163,6 @@ Template.messages.onCreated(function() {
   });
 });
 
-Template.messages.helpers({
-  customers: function() {
-    return Messages.find();
-  },
-  prevPage: function() {
-    var previousPage = currentPage === 1 ? 1 : currentPage - 1;
-    return Router.routes.messages.path({page: previousPage});
-  },
-  nextPage: function() {
-    var nextPage = hasMorePages() ? currentPage() + 1 : currentPage();
-    return Router.routes.messages.path({page: nextPage});
-  },
-  prevPageClass: function() {
-    return currentPage() <= 1 ? "disabled" : "";
-  },
-  nextPageClass: function() {
-    return hasMorePages() ? "" : "disabled";
-  }
-});
 
 Template.messages.events({
 	
@@ -172,7 +175,7 @@ Template.messages.events({
 	*/
 
   	//When filter button is pressed
-	'submit form':function(event) {
+	'click #goFilter':function(event) {
 
 		var keyword = $("#searchinput").val();
 		var filtertype = $("#filterSelect").val();
@@ -180,44 +183,66 @@ Template.messages.events({
 		if((keyword != "") && (keyword.length < 140)){
 			switch (filtertype) {
 				case 'author':
+					
+					//var msgs = Messages.find({'author': keyword},{sort:{'time': -1}, limit:Session.get("messageLimit") });
+					//if found any, then: clear and print results
+					$('#comments').empty();
 
-				msgs = Messages.find({'author': + keyword}, {sort:{'time': -1}, limit: 10});
-				//if found any, then: clear and print results
+					for(i=0;i<Messages.find().count();i++){
+						if(Messages.find().fetch()[i].author == keyword){
 
-				//Clear id="comments" and print results
-				$('#comments').empty();
+						var html = "<span class=\"badge\">"+keyword+" - "+Messages.find().fetch()[i].time+"</span>"+"<span class=\"label label-primary\"> TAGS: "+Messages.find().fetch()[i].tags+"</span>"+"<li>"+Messages.find().fetch()[i].text+"</li>";
+						$(html).prependTo('#comments');
+							/*
+							console.log("Message text is: "+Messages.find().fetch()[i].text);
+							console.log("Created by: "+Messages.find().fetch()[i].author);
+							console.log("At time: "+Messages.find().fetch()[i].time);
+							console.log("With tags: "+Messages.find().fetch()[i].tags);
+							*/
+						}
+					}
+					return false;
+					//$('#comments').prependTo(#comments);
+					//Clear id="comments" and print results
+					//html.prependTo('#comments');
+					
 
-				//https://docs.mongodb.com/manual/reference/method/cursor.forEach/
 
-				/*
-				var firstpart = "<span class='badge'>"+author+" - "+time+"</span>";
-				var middle = "<span class='label label-primary'>TAGS: {{tags}}</span>";
-	    		var third = "<li id='msg-text'> {{text}} </li>";
-				var html = $("<span class=\"badge\">"+author+" - "+time+"</span>"+"<span class=\"label label-primary\"> TAGS: "+"</span>"+"<li>"+text+"</li>");
-				*/
-				break;
+					//https://docs.mongodb.com/manual/reference/method/cursor.forEach/
+					/*
+					var firstpart = "<span class='badge'>"+author+" - "+time+"</span>";
+					var middle = "<span class='label label-primary'>TAGS: {{tags}}</span>";
+		    		var third = "<li id='msg-text'> {{text}} </li>";
+					var html = $("<span class=\"badge\">"+author+" - "+time+"</span>"+"<span class=\"label label-primary\"> TAGS: "+"</span>"+"<li>"+text+"</li>");
+					$('#comments').append(firstpart+middle+third+html);
+					*/
+					break;
 
 				case 'tag':
-
-				msgs = Messages.find({'tags': + keyword}, {sort:{'time': -1}, limit: 10});
-
-				break;
+					msgs = Messages.find({'tags': + keyword}, {sort:{'time': -1}, limit: 10});
+					break;
 
 				case 'date' :
+					msgs= Messages.find({}, {sort:{'time': -1}, limit: 10});
+					break;
 
-				msgs= Messages.find({}, {sort:{'time': -1}, limit: 10});
+				//default:
 
-				break;
 			}
 			return false; //avoid reloading of browser page on form submit
 		}
-	}
+	},
 
 	//BTN CANCEL
+	'click #cancelFilter':function(){
+		var keyword = $("#searchinput").val("");
+		messages ();
+	}
+	
 	
 });
 
- var hasMorePages = function() {
+var hasMorePages = function() {
   var totalMessages = Counts.get('messagesCount');
   return currentPage() * parseInt(Meteor.settings.public.recordsPerPage) < totalMessages;
 }
