@@ -139,7 +139,7 @@ Template.inputMessages.events({
 					});
 
 					//some jQuery to append the message into the current view (if it is not >10-20 msgs)
-					var html = $("<span class=\"badge\">"+author+" - "+time+"</span>"+"<span class=\"label label-primary\"> TAGS: "+cleanTags.toString()+"</span>"+"<li>"+text+"</li>");
+					var html = $("<span id=\"author\" class=\"badge\">"+author+"</span> <span class=\"badge\">"+time+"</span><span class=\"label label-primary\"> TAGS: "+cleanTags.toString()+"</span>"+"<li id=\"msg-text\">"+text+"</li>");
 					//html.prependTo('#comments');
 					$("#commentbox").val("");
 				}
@@ -191,7 +191,7 @@ Template.messages.events({
 					for(i=0;i<Messages.find().count();i++){
 						if(Messages.find().fetch()[i].author == keyword){
 
-						var html = "<span class=\"badge\">"+keyword+" - "+Messages.find().fetch()[i].time+"</span>"+"<span class=\"label label-primary\"> TAGS: "+Messages.find().fetch()[i].tags+"</span>"+"<li>"+Messages.find().fetch()[i].text+"</li>";
+						var html = "<span id=\"author\" class=\"badge\">"+keyword+"</span> <span class=\"badge\">"+Messages.find().fetch()[i].time+"</span>"+"<span class=\"label label-primary\"> TAGS: "+Messages.find().fetch()[i].tags+"</span>"+"<li id=\"msg-text\">"+Messages.find().fetch()[i].text+"</li>";
 						$(html).prependTo('#comments');
 							/*
 							console.log("Message text is: "+Messages.find().fetch()[i].text);
@@ -219,8 +219,79 @@ Template.messages.events({
 					break;
 
 				case 'tag':
-					msgs = Messages.find({'tags': + keyword}, {sort:{'time': -1}, limit: 10});
+					//neeed to PURGE TAGS INPUT for multiple values!!!!!!!!!!!!
+					/*
+					var purge = keyword.split(",");
+					var purgedTags = [];
+					for(var i=0;i<purge.length;i++){
+						if(purge[i]){
+							purgedTags.push(purge[i].trim());
+						}
+					}
+					purgedTags.sort();
+					*/
+
+					$('#comments').empty();
+
+					for(var i=0;i<Messages.find().count();i++){
+						var tagArray = Messages.find().fetch()[i].tags;
+
+						//console.log(tagArray);
+						for(var j=0;j<tagArray.length;j++){
+							if(tagArray[j] == keyword){
+
+							var html = "<span id=\"author\" class=\"badge\">"+Messages.find().fetch()[i].author+"</span> <span class=\"badge\">"+Messages.find().fetch()[i].time+"</span>"+"<span class=\"label label-primary\"> TAGS: "+Messages.find().fetch()[i].tags+"</span>"+"<li id=\"msg-text\">"+Messages.find().fetch()[i].text+"</li>";
+							$(html).prependTo('#comments');
+							}
+						}						
+					}
+					return false;
 					break;
+
+				/*
+				case 'tag':
+					//neeed to PURGE TAGS INPUT for multiple values!!!!!!!!!!!!
+					var purge = keyword.split(",");
+					var purgedTags = [];
+					for(var i=0;i<purge.length;i++){
+						if(purge[i]){
+							purgedTags.push(purge[i].trim());
+						}
+					}
+					purgedTags.sort();
+					$('#comments').empty();
+
+					var matchingTags = [];
+					//TRIPLE FOR!
+					for(var i=0;i<Messages.find().count();i++){
+						//tags[i] current pointer
+						var tagArray = Messages.find().fetch()[i].tags;
+
+
+						//console.log(tagArray);
+						for(var j=0;j<tagArray.length;j++){
+							var countz = 0;
+							for(var z=0;z<purgedTags.length;z++){
+								if(purgedTags[z]==tagArray[j]){
+									countz++;
+								}
+							}
+							if (countz=purgedTags.length){
+								matchingTags.push(Messages.find().fetch()[i]);
+							}
+						}					
+					}
+
+					for (var i = 0; i < matchingTags.length; i++) {
+							var html = "<span id=\"author\" class=\"badge\">"+matchingTags[i].author+"</span> <span class=\"badge\">"+matchingTags[i].time+"</span>"+"<span class=\"label label-primary\"> TAGS: "+matchingTags[i].tags+"</span>"+"<li id=\"msg-text\">"+matchingTags[i].text+"</li>";
+							$(html).prependTo('#comments');
+					}
+					return false;
+					break;
+
+				*/
+
+
 
 				case 'date' :
 					msgs= Messages.find({}, {sort:{'time': -1}, limit: 10});
@@ -235,8 +306,22 @@ Template.messages.events({
 
 	//BTN CANCEL
 	'click #cancelFilter':function(){
-		var keyword = $("#searchinput").val("");
-		messages ();
+
+		var keyword = $("#searchinput").val();
+		if(keyword){
+			$("#searchinput").val("");
+			$('#comments').empty();
+			for(i=0;i<Messages.find().count();i++){
+
+				var html = "<span id=\"author\" class=\"badge\">"+Messages.find().fetch()[i].author+"</span> <span class=\"badge\">"+Messages.find().fetch()[i].time+"</span>"+"<span class=\"label label-primary\"> TAGS: "+Messages.find().fetch()[i].tags+"</span>"+"<li id=\"msg-text\">"+Messages.find().fetch()[i].text+"</li>";
+				$(html).prependTo('#comments');
+				
+			}
+			return false;
+
+		}
+		
+		
 	}
 	
 	
