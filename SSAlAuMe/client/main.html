@@ -29,28 +29,6 @@
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <h1>SSAlAuMe - Gossip Chat and more!</h1> {{> loginButtons}}
-    
-      <form class="form">
-          <div class="col-xs-8 col-md-10">
-    <!-- Selector from https://silviomoreto.github.io/bootstrap-select/methods/-->
-    <div class="row">
-  <div class="col-lg-6">
-    <div class="input-group">
-      <div class="input-group-btn">
-       <select  id="filterSelect" class="selectpicker show-tick">
-        <option class="option-custom" value="author">By author</option>
-        <option class="option-custom" value="tag">By tag</option>
-        <option class="option-custom" value="date">By date</option>
-</select>
-      </div><!-- /btn-group -->
-         <input type="text" class="form-control" aria-label="...">
-    </div><!-- /input-group -->
-    </div>
-          <button id="goFilter" class="btn btn-default" type="submit">Filter</button>
-
-  </div>
-</div>
-</form>
     </div>
   </nav>
 </template>
@@ -99,26 +77,40 @@
 </template>
 
 <template name="messages">
+  <!-- FILTER MESSAGES functionality -->
+  <form class="form">
+            <div class="col-xs-8 col-md-10">
+      <!-- Selector from https://silviomoreto.github.io/bootstrap-select/methods/-->
+      <div class="row">
+    <div class="col-lg-6">
+      <div class="input-group">
+        <div class="input-group-btn">
+         <select  id="filterSelect" class="selectpicker show-tick">
+          <option class="option-custom" value="author">By author</option>
+          <option class="option-custom" value="tag">By tag</option>
+          <option class="option-custom" value="date">By date</option>
+  </select>
+        </div><!-- /btn-group -->
+           <input type="text" id="searchinput" class="form-control" aria-label="...">
+      </div><!-- /input-group -->
+      </div>
+      <button id="goFilter" class="btn btn-default" type="submit">Filter</button>
+    </div>
+  </div>
+  </form>
+
+  <!-- MESSAGES -->
   <ul class="comments" id="comments">
-  
     <!-- for each element of the "Collection.find()" object -->
     {{#each messages}}  
-    <span class="badge"> {{author}} - {{time}} </span><!-- PLEASE SEPARTE in 2 independent parts-->
+    <span class="badge"> {{author}} - {{time}} </span>
+    <!-- PLEASE SEPARTE in 2 independent parts!!!!!!!!!!!!!!-->
     <span class="label label-primary">TAGS: {{tags}}</span>
     <li id="msg-text"> {{text}} </li>
-    
-    
-    <!--
-    <li id="msg-text"> {{text}} </li>
-    <div>
-    <label id="msg-author"> {{author}} </label>
-    <li id="msg-tags"> {{tags}} </li>
-    <li id="msg-time"> {{time}} </li>
-    </div>
-    -->
     {{/each}}
-
   </ul>
+
+  <!-- NAVIGATION -->
   <nav>
     <ul class="pager">
       <li class="{{prevPageClass}}">

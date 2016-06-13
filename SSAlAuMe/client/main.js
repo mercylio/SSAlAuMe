@@ -39,42 +39,6 @@ Template.messages.helpers({
 	}
 });
 
-//When filter button is pressed
-Template.navbar.events({
-
-'submit form':function(event) {
-
-		var keyword = $("#searchinput").val();
-		var filtertype = $('#filterSelect').val();
-
-		switch (filtertype) {
-			case 'author':
-
-			//msgs = Messages.find({"author: " + keyword}, {sort: {time: -1}});
-
-			break;
-
-			case 'tag':
-
-			//msgs = Messages.find({"tags: " + keyword}, {sort: {time: -1}});
-
-			break;
-
-			case 'date' :
-
-			//msgs= Messages.find({}, {sort: {time: -1}});
-
-			break;
-		}
-
-		//Should return messages saved in msgs and display them
-		//below
-
-
-
-	}
-});
-
 
 //Message insertion
 Template.inputMessages.events({
@@ -181,11 +145,59 @@ Template.messages.helpers({
 });
 
 Template.messages.events({
+	
+	/*
 	'click #btnAddMessage': function(e) {
-    e.preventDefault();
+    	e.preventDefault();
 
-    Router.go('addMessage');
-  }
+    	Router.go('addMessage');
+  	}
+	*/
+
+  	//When filter button is pressed
+	'submit form':function(event) {
+
+		var keyword = $("#searchinput").val();
+		var filtertype = $("#filterSelect").val();
+
+		if((keyword != "") && (keyword.length < 140)){
+			switch (filtertype) {
+				case 'author':
+
+				msgs = Messages.find({'author': + keyword}, {sort:{'time': -1}, limit: 20});
+				//if found any, then: clear and print results
+
+				//Clear id="comments" and print results
+				$('#comments').empty();
+
+				//https://docs.mongodb.com/manual/reference/method/cursor.forEach/
+
+				/*
+				var firstpart = "<span class='badge'>"+author+" - "+time+"</span>";
+				var middle = "<span class='label label-primary'>TAGS: {{tags}}</span>";
+	    		var third = "<li id='msg-text'> {{text}} </li>";
+				var html = $("<span class=\"badge\">"+author+" - "+time+"</span>"+"<span class=\"label label-primary\"> TAGS: "+"</span>"+"<li>"+text+"</li>");
+				*/
+				break;
+
+				case 'tag':
+
+				msgs = Messages.find({'tags': + keyword}, {sort:{'time': -1}, limit: 20});
+
+				break;
+
+				case 'date' :
+
+				msgs= Messages.find({}, {sort:{'time': -1}, limit: 20});
+
+				break;
+			}
+			return false; //avoid reloading of browser page on form submit
+		}
+	}
+
+	//BTN CANCEL
+	
 });
 
  var hasMorePages = function() {
