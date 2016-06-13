@@ -292,9 +292,6 @@ Template.messages.events({
 				*/
 
 
-
-				
-
 				//default:
 
 			}
