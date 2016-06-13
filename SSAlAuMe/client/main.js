@@ -293,9 +293,7 @@ Template.messages.events({
 
 
 
-				case 'date' :
-					msgs= Messages.find({}, {sort:{'time': -1}, limit: 10});
-					break;
+				
 
 				//default:
 
