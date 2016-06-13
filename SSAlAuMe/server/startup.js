@@ -11,7 +11,8 @@ Meteor.startup(function(){
 	if (Messages.find().count() == 0){
 		var defaultAuthor = "Anonymus";
 		var date = new Date();
-		var createdAt = date.toString();
+		//var createdAt = date.toString();
+		var createdAt = date.toISOString().substr(0, 10);
 		var defaultTags = ["TAG1","TAG2","TAG3"];
 		var defaultText = "Hello world! Let's get some posts on this message board!"
 		
@@ -42,7 +43,8 @@ Meteor.startup(function(){
 			var randTxt = Math.floor(Math.random() * randtext.length) + 0;
 			//console.log(randAuth + " _ " + randTag + " _ " + randTxt);
 			var randDate = new Date();
-			var currentTime = randDate.toString();
+			//var currentTime = randDate.toString();
+			var currentTime = randDate.toISOString().substr(0, 10);
 			Messages.insert({author: randauthor[randAuth], time: currentTime, tags: cleanTags, text: randtext[randTxt]});
 		}
 

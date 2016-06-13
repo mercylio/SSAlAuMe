@@ -51,7 +51,6 @@ Accounts.ui.config({
 Template.messages.helpers({
 	messages (){
 
-		//var msgs = Messages.find({}, {sort:{'time': -1}, limit: 10});
 		var msgs = Messages.find({}, {sort:{'time': -1}, limit:Session.get("messageLimit") });
 		return msgs;
 	}
@@ -182,7 +181,7 @@ Template.messages.events({
 			switch (filtertype) {
 				case 'author':
 
-				msgs = Messages.find({'author': + keyword}, {sort:{'time': -1}, limit: 20});
+				msgs = Messages.find({'author': + keyword}, {sort:{'time': -1}, limit: 10});
 				//if found any, then: clear and print results
 
 				//Clear id="comments" and print results
@@ -200,13 +199,13 @@ Template.messages.events({
 
 				case 'tag':
 
-				msgs = Messages.find({'tags': + keyword}, {sort:{'time': -1}, limit: 20});
+				msgs = Messages.find({'tags': + keyword}, {sort:{'time': -1}, limit: 10});
 
 				break;
 
 				case 'date' :
 
-				msgs= Messages.find({}, {sort:{'time': -1}, limit: 20});
+				msgs= Messages.find({}, {sort:{'time': -1}, limit: 10});
 
 				break;
 			}
